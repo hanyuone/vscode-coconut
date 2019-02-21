@@ -1,0 +1,36 @@
+{
+    "name": "vscode-coconut",
+    "displayName": "Coconut",
+    "description": "Syntax highlighting for the Coconut programming language.",
+    "version": "0.0.1",
+    "publisher": "hanyuone",
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "coconut",
+                "aliases": [
+                    "Coconut",
+                    "coconut"
+                ],
+                "extensions": [
+                    ".coco"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "coconut",
+                "scopeName": "source.coconut",
+                "path": "./syntaxes/coconut.tmLanguage"
+            }
+        ]
+    },
+    "dependencies": {}
+}

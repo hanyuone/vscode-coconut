@@ -1,0 +1,3 @@
+data LinkedList(var:int=None, rest:LinkedList=None):
+  def push(ls)
+  

@@ -1,0 +1,8 @@
+def factorial(0) = 1
+
+@addpattern(factorial)
+def factorial(n is int if n > 0) =
+  n * factorial(n - 1)
+
+temp = range(10) |> map$(factorial)
+for a in temp: print(a)
