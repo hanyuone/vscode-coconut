@@ -111,7 +111,7 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(elif|else|except|finally|for|if|try|while|with|break|continue|pass|raise|return|yield|(?&lt;!\\)(match|case))\b</string>
+			<string>\b(elif|else|except|finally|for|if|try|while|with|break|continue|pass|raise|return|yield|(?&lt;!\\)(match|case|where))\b</string>
 			<key>name</key>
 			<string>keyword.control.flow_block_delimiters.coconut</string>
 		</dict>
@@ -129,19 +129,19 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>&lt;=|&gt;=|==|&lt;|&gt;|!=|≠|≤|≥|¬=</string>
+			<string>&lt;=|&gt;=|==|&lt;(?!\*|\|)|&gt;|!=|≠|≤|≥|¬=</string>
 			<key>name</key>
 			<string>keyword.operator.comparison.coconut</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>(\+|-|\*|\*\*|/|//|%|&lt;&lt;|&gt;&gt;|&amp;|\^|~|@|::|\$|\|&gt;|&lt;\||\|\*&gt;|&lt;\*\||`|&lt;?\*?\.\.\*?&gt;?|\?\??|\||→|\*?↦|↤\*?|&lt;?\*?∘\*?&gt;?|⋅|↑|÷|−|⁻|∧|∩|∨|∪|⊻|⊕|«|»|×|…)=</string>
+			<string>(\+|-|\*|\*\*|/|//|%|&lt;&lt;|&gt;&gt;|&amp;|\^|~|@|::|\$|\|\??\*?\*?&gt;|&lt;\*?\*?\||`|&lt;?\*?\*?\.\.\*?\*?&gt;?|\?\??|\|→|\??\*?\*?↦|↤\*?\*?|&lt;?\*?∘\*?&gt;?|⋅|↑|÷|−|⁻|∧|∩|∨|∪|⊻|⊕|«|»|×|…)=</string>
 			<key>name</key>
 			<string>keyword.operator.assignment.augmented.coconut</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\+|-|\*|\*\*|/|//|%|&lt;&lt;|&gt;&gt;|&amp;|\^|~|@|::|\$|\|&gt;|&lt;\||\|\*&gt;|&lt;\*\||`|&lt;?\*?\.\.\*?&gt;?|\?\??|\||→|\*?↦|↤\*?|&lt;?\*?∘\*?&gt;?|⋅|↑|÷|−|⁻|¬|∧|∩|∨|∪|⊻|⊕|«|»|×|…</string>
+			<string>\+|-|\*|\*\*|/|//|%|&lt;&lt;|&gt;&gt;|&amp;|\^|~|@|::|\$|\|\??\*?\*?&gt;|&lt;\*?\*?\||`|&lt;?\*?\*?\.\.(?!\.)\*?\*?&gt;?|\?\??|\|→|\??\*?\*?↦|↤\*?\*?|&lt;?\*?∘\*?&gt;?|⋅|↑|÷|−|⁻|¬|∧|∩|∨|∪|⊻|⊕|«|»|×|…</string>
 			<key>name</key>
 			<string>keyword.operator.arithmetic.coconut</string>
 		</dict>
@@ -171,11 +171,6 @@
 					<key>name</key>
 					<string>entity.other.inherited-class.coconut</string>
 				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>invalid.illegal.missing_section_begin.coconut</string>
-				</dict>
 			</dict>
 			<key>name</key>
 			<string>meta.class.coconut</string>
@@ -193,7 +188,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^\s*(match\s+)?(async\s+)?(match\s+)?(def)\s+(?=[a-zA-Z_][\w.]*\s*\()</string>
+			<string>^\s*((?:match|addpattern)\s+)?(async\s+)?((?:match|addpattern)\s+)?(def)\s+(?=[a-zA-Z_][\w.]*\s*\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -220,13 +215,7 @@
 			<key>end</key>
 			<string>\s*(:|=)</string>
 			<key>endCaptures</key>
-			<dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>invalid.illegal.missing_section_begin.coconut</string>
-				</dict>
-			</dict>
+			<dict/>
 			<key>name</key>
 			<string>meta.function.coconut</string>
 			<key>patterns</key>
@@ -313,7 +302,7 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(None|True|False|Ellipsis|NotImplemented)\b</string>
+			<string>\b(None|True|False|Ellipsis|NotImplemented|TYPE_CHECKING)\b</string>
 			<key>name</key>
 			<string>constant.language.word_like.coconut</string>
 		</dict>
@@ -456,11 +445,11 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#fstring_quoted</string>
+			<string>#f_string_quoted</string>
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#rstring_quoted</string>
+			<string>#string_quoted_regex</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -479,14 +468,14 @@
 		<key>builtin_functions</key>
 		<dict>
 			<key>match</key>
-			<string>(?&lt;!(?&lt;!\.)\.)\b(__import__|abs|all|any|ascii|bin|callable|(py_)?chr|compile|delattr|dir|divmod|eval|exec|(py_)?filter|format|getattr|globals|hasattr|hash|help|(py_)?hex|id|(py_)?input|isinstance|issubclass|iter|len|locals|vars|min|next|oct|ord|pow|(py_)?print|repr|round|setattr|sorted|sum|max|reduce|takewhile|dropwhile|tee|makedata|consume|py_raw_input|py_xrange|addpattern|recursive_iterator|reiterable|scan|groupsof)\b</string>
+			<string>(?&lt;!(?&lt;!\.)\.)\b(__import__|abs|all|any|ascii|bin|callable|(py_)?chr|compile|delattr|dir|divmod|eval|exec|(py_)?filter|format|getattr|globals|hasattr|hash|help|(py_)?hex|id|(py_)?input|isinstance|issubclass|iter|len|locals|vars|min|next|oct|ord|pow|(py_)?print|repr|round|setattr|sorted|sum|max|reduce|takewhile|dropwhile|tee|makedata|consume|py_raw_input|py_xrange|addpattern|recursive_iterator|reiterable|scan|groupsof|memoize|fmap|(py_)?breakpoint)\b</string>
 			<key>name</key>
 			<string>support.function.builtin.coconut</string>
 		</dict>
 		<key>builtin_types</key>
 		<dict>
 			<key>match</key>
-			<string>(?&lt;!(?&lt;!\.)\.)\b(bool|bytearray|bytes|classmethod|complex|dict|(py_)?range|tuple|enumerate|float|frozenset|(py_)?int|list|memoryview|(py_)?object|(py_)?open|property|reversed|set|slice|staticmethod|(py_)?str|super|type|(py_)?map|(py_)?zip|parallel_map|count|concurrent_map|fmap|starmap)\b</string>
+			<string>(?&lt;!(?&lt;!\.)\.)\b(bool|bytearray|bytes|classmethod|complex|dict|(py_)?range|tuple|(py_)?enumerate|float|frozenset|(py_)?int|list|memoryview|(py_)?object|(py_)?open|property|(py_)?reversed|set|slice|staticmethod|(py_)?str|super|type|(py_)?map|(py_)?zip|parallel_map|count|concurrent_map|starmap|zip_longest)\b</string>
 			<key>name</key>
 			<string>support.type.coconut</string>
 		</dict>
@@ -788,6 +777,260 @@
 			<string>\\(u\h{4}|U\h{8}|N\{[a-zA-Z\s]+\})</string>
 			<key>name</key>
 			<string>constant.character.escaped.coconut</string>
+		</dict>
+		<key>f_string_quoted</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>([fF])'''</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>'''</string>
+					<key>name</key>
+					<string>string.quoted.single.block.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string_patterns</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([rR][fF]|[fF][rR])'''</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>'''</string>
+					<key>name</key>
+					<string>string.quoted.single.block.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#escaped_characters_raw</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([fF])'</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>'|(\n)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>string.quoted.single.line.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string_patterns</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([rR][fF]|[fF][rR])'</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>'|(\n)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>string.quoted.single.line.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#escaped_characters_raw</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([fF])"""</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>"""</string>
+					<key>name</key>
+					<string>string.quoted.double.block.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string_patterns</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([rR][fF]|[fF][rR])"""</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>"""</string>
+					<key>name</key>
+					<string>string.quoted.double.block.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#escaped_characters_raw</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([fF])"</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>"|(\n)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>string.quoted.double.line.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string_patterns</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>([rR][fF]|[fF][rR])"</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.string.prefix.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>"|(\n)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>string.quoted.double.line.fmt.coconut</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#escaped_characters_raw</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#format_specifier_extended</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
 		</dict>
 		<key>format_escape</key>
 		<dict>
@@ -1304,7 +1547,7 @@
 					<key>begin</key>
 					<string>(?&lt;={)</string>
 					<key>end</key>
-					<string>(?=!|:)</string>
+					<string>(?=!|:|})</string>
 					<key>name</key>
 					<string>meta.self.coconut</string>
 					<key>patterns</key>
@@ -1762,260 +2005,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>fstring_quoted</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>([fF])'''</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'''</string>
-					<key>name</key>
-					<string>string.quoted.single.block.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#string_patterns</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][fF]|[fF][rR])'''</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'''</string>
-					<key>name</key>
-					<string>string.quoted.single.block.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([fF])'</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'|(\n)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>string.quoted.single.line.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#string_patterns</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][fF]|[fF][rR])'</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'|(\n)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>string.quoted.single.line.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([fF])"""</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>"""</string>
-					<key>name</key>
-					<string>string.quoted.double.block.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#string_patterns</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][fF]|[fF][rR])"""</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>"""</string>
-					<key>name</key>
-					<string>string.quoted.double.block.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([fF])"</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>"|(\n)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>string.quoted.double.line.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#string_patterns</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][fF]|[fF][rR])"</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>"|(\n)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.unclosed_string.fmt.coconut</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>string.quoted.double.line.fmt.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#format_specifier_extended</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
 		<key>function_annotation</key>
 		<dict>
 			<key>begin</key>
@@ -2211,7 +2200,7 @@
 		<key>magic_function_names</key>
 		<dict>
 			<key>match</key>
-			<string>\b__(abs|add|and|await|bool|bytes|call|ceil|complex|contains|copy|deepcopy|del|delattr|delete|delitem|dir|div|divmod|a?enter|eq|a?exit|float|floor|floordiv|format|ge|get|getattr|getattribute|getinitargs|getitem|getnewargs|getstate|gt|hash|hex|iadd|iand|idiv|ifloordiv|ilshift|imul|index|init|instancecheck|int|invert|ior|ipow|irshift|isub|a?iter|itruediv|ixor|le|len|lshift|lt|metaclass|missing|mod|mul|ne|neg|new|a?next|(py_)?oct|or|pos|pow|prepare|radd|rand|rdiv|rdivmod|reduce|reduce_ex|repr|reversed|rfloordiv|rlshift|rmod|rmul|ror|round|rpow|rrshift|rshift|rsub|rtruediv|rxor|set|setattr|setitem|setstate|sizeof|str|sub|subclasscheck|subclasshook|truediv|trunc|unicode|weakref|xor|fmap)__\b</string>
+			<string>\b__(abs|add|and|await|bool|bytes|call|ceil|complex|contains|copy|deepcopy|del|delattr|delete|delitem|dir|div|divmod|a?enter|eq|a?exit|float|floor|floordiv|format|ge|get|getattr|getattribute|getinitargs|getitem|getnewargs|getstate|gt|hash|hex|iadd|iand|idiv|ifloordiv|ilshift|imul|index|init|instancecheck|int|invert|ior|ipow|irshift|isub|a?iter|itruediv|ixor|le|len|lshift|lt|metaclass|missing|mod|mul|ne|neg|new|a?next|oct|or|pos|pow|prepare|radd|rand|rdiv|rdivmod|reduce|reduce_ex|repr|reversed|rfloordiv|rlshift|rmod|rmul|ror|round|rpow|rrshift|rshift|rsub|rtruediv|rxor|set|setattr|setitem|setstate|sizeof|str|sub|subclasscheck|subclasshook|truediv|trunc|unicode|weakref|xor|fmap)__\b</string>
 			<key>name</key>
 			<string>support.function.magic.coconut</string>
 		</dict>
@@ -2365,120 +2354,6 @@
 			<string>\\(\\|\?|\.|\*|\+|\{|\}|\||\(|\)|\[|\]|\^|\$)</string>
 			<key>name</key>
 			<string>constant.character.escaped.special.regex.coconut</string>
-		</dict>
-		<key>rstring_quoted</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>([rR][bB]?|[bB][rR])'''</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'''</string>
-					<key>name</key>
-					<string>string.quoted.single.block.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][bB]?|[bB][rR])'</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'|(\n)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.unclosed_string.coconut</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>string.quoted.single.line.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][bB]?|[bB][rR])"""</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>"""</string>
-					<key>name</key>
-					<string>string.quoted.double.block.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([rR][bB]?|[bB][rR])"</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.type.string.prefix.coconut</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>"|(\n)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.unclosed_string.coconut</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>string.quoted.double.line.coconut</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_characters_raw</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
 		</dict>
 		<key>string_patterns</key>
 		<dict>
